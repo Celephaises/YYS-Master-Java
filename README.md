@@ -10,7 +10,7 @@
 
 # 预览
 
-![image](https://github.com/Celephaises/YYS-Master-Javafx/blob/master/preview.jpg)
+![image](https://i0.hdslb.com/bfs/album/90350256cfe89bff364900abcc775580de289629.jpg)
 
 # 使用说明
 

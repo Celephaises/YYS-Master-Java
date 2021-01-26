@@ -10,7 +10,7 @@
 
 # 预览
 
-![image](https://i0.hdslb.com/bfs/album/90350256cfe89bff364900abcc775580de289629.jpg)
+![image](https://i0.hdslb.com/bfs/album/a83cad5231e73e414067397f7abfd94c83525071.png)
 
 # 使用说明
 

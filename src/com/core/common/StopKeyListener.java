@@ -26,13 +26,10 @@ public class StopKeyListener {
     }
 
     public static void addListener() {
-        JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
-            @Override
-            public void onHotKey(int key) {
-                if (key == KEY_STOP) {
-                    if (CONTROLLER.runFlag) {
-                        CONTROLLER.stop(null);
-                    }
+        JIntellitype.getInstance().addHotKeyListener(key -> {
+            if (key == KEY_STOP) {
+                if (CONTROLLER.runFlag) {
+                    CONTROLLER.stop(null);
                 }
             }
         });

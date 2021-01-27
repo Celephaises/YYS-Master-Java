@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
  * @author Celphis
  */
 public class StartKeyListener {
-    private static Controller CONTROLLER = Main.getController();
+    private static Controller CONTROLLER;
     private static final int KEY_START = 90;
 
     static {
@@ -28,13 +28,10 @@ public class StartKeyListener {
     }
 
     public static void addListener() {
-        JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
-            @Override
-            public void onHotKey(int key) {
-                if (key == KEY_START) {
-                    if (!CONTROLLER.runFlag) {
-                        CONTROLLER.start(null);
-                    }
+        JIntellitype.getInstance().addHotKeyListener(key -> {
+            if (key == KEY_START) {
+                if (!CONTROLLER.runFlag) {
+                    CONTROLLER.start(null);
                 }
             }
         });

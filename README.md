@@ -1,5 +1,3 @@
-## YYS-Master-Javafx
-
 ## 基于Opencv的鼠识图点击工具
 
 # 项目说明

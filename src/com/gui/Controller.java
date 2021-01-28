@@ -43,6 +43,18 @@ public class Controller {
 
     @FXML
     public RadioButton buHuanGouLiang;
+
+    @FXML
+    public RadioButton danRenYuHun;
+    @FXML
+    public RadioButton zuDuiYuHun;
+    @FXML
+    public RadioButton hunTuYuHun;
+    @FXML
+    public RadioButton hunShiYuHun;
+    @FXML
+    public RadioButton yeYuanHuoYuHun;
+
     @FXML
     public Pane root;
 
@@ -79,6 +91,8 @@ public class Controller {
     public ToggleGroup tanSuoModel = new ToggleGroup();
     public ToggleGroup tanSuoJieJie = new ToggleGroup();
     public ToggleGroup tanSuoGouLiang = new ToggleGroup();
+    public ToggleGroup yuHunModel = new ToggleGroup();
+    public ToggleGroup yuHunZuDui = new ToggleGroup();
 
     @FXML
     public void stop(Event event) {

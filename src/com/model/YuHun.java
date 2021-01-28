@@ -34,9 +34,7 @@ public class YuHun extends BaseModel {
 
     private void yuHun() throws InterruptedException {
         for (String img : imgs) {
-            if (MouseUtil.click(IMG_PATH + img)) {
-                Thread.sleep(TimeAndRandomUtil.random(100, 100));
-            }
+            MouseUtil.click(IMG_PATH + img);
         }
     }
 }

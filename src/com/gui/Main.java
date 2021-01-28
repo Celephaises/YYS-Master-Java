@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * 界面属性类
@@ -42,7 +43,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(getClass().getResource("gui.fxml"));
-            Parent root = null;
+            Parent root;
             try {
                 root = loader.load();
                 initController(loader);
@@ -115,12 +116,15 @@ public class Main extends Application {
                 return null;
             }
         }));
-        for (RadioButton radioButton : Arrays.asList(controller.danRenTanSuo, controller.huanGouLiang, controller.daJieJie)) {
+        for (RadioButton radioButton : Arrays.asList(controller.danRenTanSuo, controller.huanGouLiang, controller.daJieJie, controller.danRenYuHun, controller.hunTuYuHun)) {
             radioButton.setUserData(0);
             radioButton.setSelected(true);
         }
         for (RadioButton radioButton : Arrays.asList(controller.zuDuiTanSuo, controller.buHuanGouLiang, controller.buDaJieJie)) {
             radioButton.setUserData(1);
+        }
+        for (RadioButton radioButton : Collections.singletonList(controller.yeYuanHuoYuHun)) {
+            radioButton.setUserData(2);
         }
         for (RadioButton radioButton : Arrays.asList(controller.danRenTanSuo, controller.zuDuiTanSuo)) {
             radioButton.setToggleGroup(controller.tanSuoModel);
@@ -131,6 +135,12 @@ public class Main extends Application {
         }
         for (RadioButton radioButton : Arrays.asList(controller.huanGouLiang, controller.buHuanGouLiang)) {
             radioButton.setToggleGroup(controller.tanSuoGouLiang);
+        }
+        for (RadioButton radioButton : Arrays.asList(controller.danRenYuHun, controller.zuDuiYuHun)) {
+            radioButton.setToggleGroup(controller.yuHunZuDui);
+        }
+        for (RadioButton radioButton : Arrays.asList(controller.hunTuYuHun, controller.hunShiYuHun, controller.yeYuanHuoYuHun)) {
+            radioButton.setToggleGroup(controller.yuHunModel);
         }
         controller.initFlag = true;
         controller.btnStop.setDisable(true);

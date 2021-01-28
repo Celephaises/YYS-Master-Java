@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="286.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.gui.Controller">
@@ -43,16 +44,42 @@
             <Pane prefHeight="215.0" prefWidth="196.0">
                 <Label layoutX="14.0" layoutY="10.0" text="御魂模式："/>
                 <Label layoutX="14.0" layoutY="30.0" text="御魂类型："/>
-                <RadioButton layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="单人"/>
-                <RadioButton layoutX="137.0" layoutY="10.0" mnemonicParsing="false" text="组队"/>
-                <RadioButton layoutX="83.0" layoutY="30.0" mnemonicParsing="false" text="魂土"/>
-                <RadioButton layoutX="137.0" layoutY="30.0" mnemonicParsing="false" text="魂十"/>
-                <RadioButton layoutX="83.0" layoutY="50.0" mnemonicParsing="false" text="业原火"/>
+                <RadioButton fx:id="danRenYuHun" layoutX="83.0" layoutY="10.0" mnemonicParsing="false"
+                             text="单人"/>
+                <RadioButton fx:id="zuDuiYuHun" layoutX="137.0" layoutY="10.0" mnemonicParsing="false"
+                             text="组队"/>
+                <RadioButton fx:id="hunTuYuHun" layoutX="83.0" layoutY="30.0" mnemonicParsing="false"
+                             text="魂土"/>
+                <RadioButton fx:id="hunShiYuHun" layoutX="137.0" layoutY="30.0" mnemonicParsing="false"
+                             text="魂十"/>
+                <RadioButton fx:id="yeYuanHuoYuHun" layoutX="83.0" layoutY="50.0" mnemonicParsing="false"
+                             text="业原火"/>
+                <Label layoutX="60.0" layoutY="103.0" text="还没做好" textFill="#4f4fff">
+                    <font>
+                        <Font size="19.0"/>
+                    </font>
+                </Label>
             </Pane>
         </Tab>
-        <Tab fx:id="yuLinPane" onSelectionChanged="#yuLinModel" text="御灵"/>
+        <Tab fx:id="yuLinPane" onSelectionChanged="#yuLinModel" text="御灵">
+            <Pane prefHeight="200.0" prefWidth="200.0">
+                <Label layoutX="62.0" layoutY="109.0" text="还没做好" textFill="#0015ff">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </Pane>
+        </Tab>
         <Tab fx:id="jieJiePane" onSelectionChanged="#jieJieModel" text="结界"/>
-        <Tab fx:id="baiGuiPane" onSelectionChanged="#baiGuiModel" text="百鬼"/>
+        <Tab fx:id="baiGuiPane" onSelectionChanged="#baiGuiModel" text="百鬼">
+            <Pane prefHeight="200.0" prefWidth="200.0">
+                <Label layoutX="62.0" layoutY="103.0" text="还没做好" textFill="#0037ff">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </Pane>
+        </Tab>
     </TabPane>
     <Label fx:id="logLable" layoutX="270.0" layoutY="158.0" text="日志打印"/>
     <TextArea fx:id="logArea" layoutX="196.0" layoutY="173.0" prefHeight="111.0" prefWidth="196.0"/>

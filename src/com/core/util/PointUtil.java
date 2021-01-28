@@ -1,7 +1,6 @@
 package com.core.util;
 
 import com.core.common.Config;
-import com.gui.Main;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -25,13 +24,15 @@ import java.util.Random;
 public class PointUtil {
     private static final Dimension DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static List<Point> points;
-    private static final String PATH = "img";
+    private static final String PATH;
     private static Mat target;
     private static Mat screen;
-    private static final String OPEN_CV_PATH = PointUtil.class.getResource("").getPath().replace("core/util", "opencv/opencv_java451.dll");
+    private static final int IMREAD_TYPE;
 
     static {
-        System.load(OPEN_CV_PATH);
+        PATH = new File("").getAbsolutePath() + "/img/";
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        IMREAD_TYPE = Config.IMREAD_TYPE;
     }
 
     public static List<Point> findFloatPoints(String img) {
@@ -76,9 +77,9 @@ public class PointUtil {
         try {
             screenshot = (new Robot()).createScreenCapture(
                     new Rectangle(0, 0, (int) DIMENSION.getWidth(), (int) DIMENSION.getHeight()));
-            ImageIO.write(screenshot, "jpg", new File("img/screen.jpg"));
-            target = Imgcodecs.imread(PATH + "/" + img + ".jpg", Imgcodecs.IMREAD_GRAYSCALE);
-            screen = Imgcodecs.imread("img/screen.jpg", Imgcodecs.IMREAD_GRAYSCALE);
+            ImageIO.write(screenshot, "jpg", new File(PATH + "screen.jpg"));
+            target = Imgcodecs.imread(PATH + img + ".jpg", IMREAD_TYPE);
+            screen = Imgcodecs.imread(PATH + "screen.jpg", IMREAD_TYPE);
         } catch (AWTException | IOException e) {
             e.printStackTrace();
         }
@@ -91,8 +92,8 @@ public class PointUtil {
             screenshot = (new Robot()).createScreenCapture(
                     new Rectangle(0, 0, (int) DIMENSION.getWidth(), (int) DIMENSION.getHeight()));
             ImageIO.write(screenshot, "jpg", new File("img/screen.jpg"));
-            target = Imgcodecs.imread(PATH + "/" + img + ".jpg", Imgcodecs.IMREAD_GRAYSCALE);
-            screen = Imgcodecs.imread("img/screen.jpg", Imgcodecs.IMREAD_GRAYSCALE).submat(upLeft.y, downRight.y, upLeft.x, downRight.x);
+            target = Imgcodecs.imread(PATH + "/" + img + ".jpg", IMREAD_TYPE);
+            screen = Imgcodecs.imread("img/screen.jpg", IMREAD_TYPE).submat(upLeft.y, downRight.y, upLeft.x, downRight.x);
         } catch (AWTException | IOException e) {
             e.printStackTrace();
         }

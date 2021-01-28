@@ -1,25 +1,17 @@
 package com.gui;
 
-import com.core.util.PathUtil;
+import com.core.common.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * 界面属性类
@@ -28,22 +20,44 @@ import java.util.Objects;
  */
 public class Main extends Application {
     private static Controller controller;
-    private static final String ICON_PATH = "https://i0.hdslb.com/bfs/album/16a1b7ee8d6d9d547d1be4501e2fbe025b8b846a.jpg";
-    private static final String GIF_PATH = "https://i0.hdslb.com/bfs/album/9cc284cffc643fc8794d731991a275f0921354ff.gif";
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(PathUtil.getFxmlPath(this, "gui"));
-        InputStream inputStream = PathUtil.getFxmlFile(this, "gui");
-        Parent root= loader.load(inputStream);
-        initController(loader);
-        primaryStage.getIcons().add(new Image(ICON_PATH));
-        primaryStage.setTitle("YYS-Master");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 393, 286));
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            Config.init();
+        } catch (NumberFormatException e) {
+            Config.config = null;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.titleProperty().set("错误");
+            alert.headerTextProperty().set("根目录配置文件 config.properties 配置错误");
+            alert.showAndWait();
+        } catch (IOException e) {
+            Config.config = null;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.titleProperty().set("错误");
+            alert.headerTextProperty().set("根目录配置文件 config.properties 丢失");
+            alert.showAndWait();
+        }
+        if (Config.config != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setBuilderFactory(new JavaFXBuilderFactory());
+            loader.setLocation(getClass().getResource("gui.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+                initController(loader);
+                primaryStage.getIcons().add(new Image(Config.ICON_PATH));
+                primaryStage.setTitle("YYS-Master");
+                primaryStage.setResizable(false);
+                primaryStage.setScene(new Scene(root, 393, 286));
+                primaryStage.show();
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.titleProperty().set("错误");
+                alert.headerTextProperty().set("未知异常 界面初始化失败");
+                alert.showAndWait();
+            }
+        }
     }
 
     @Override
@@ -51,10 +65,6 @@ public class Main extends Application {
         controller = null;
         super.stop();
         System.exit(0);
-    }
-
-    public static void start(String[] args) {
-        launch(args);
     }
 
     public static Controller getController() {
@@ -73,7 +83,7 @@ public class Main extends Application {
     }
 
     private void initGif() {
-        Image gif = new Image(GIF_PATH);
+        Image gif = new Image(Config.GIF_PATH);
         double y = controller.gifImg.getFitHeight();
         double x = controller.gifImg.getFitWidth();
         controller.gifImg.setFitWidth(controller.gifImg.getLayoutX());
@@ -81,7 +91,7 @@ public class Main extends Application {
         controller.gifImg.setFitHeight(gif.getHeight());
         controller.gifImg.setPreserveRatio(true);
         controller.gifImg.setCache(true);
-        controller.gifImg.setImage(new Image(GIF_PATH));
+        controller.gifImg.setImage(gif);
         x = (x - controller.gifImg.getFitWidth()) / 2;
         controller.gifImg.setLayoutX(controller.gifImg.getLayoutX() + x);
         y = y - controller.gifImg.getFitHeight();

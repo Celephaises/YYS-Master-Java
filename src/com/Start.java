@@ -2,6 +2,7 @@ package com;
 
 
 import com.gui.Main;
+import javafx.application.Application;
 
 /**
  * 启动类
@@ -10,6 +11,6 @@ import com.gui.Main;
  */
 public class Start {
     public static void main(String[] args) {
-        Main.start(args);
+        Application.launch(Main.class, args);
     }
 }

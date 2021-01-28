@@ -38,6 +38,7 @@ public class JieJie extends BaseModel {
         if (MouseUtil.click(IMG_PATH + "jjtpkaishi")) {
             Thread.sleep(TimeAndRandomUtil.random(50, 30));
         }
+        //没有突破券时停止
         while (PointUtil.getPoint(IMG_PATH + "jjtpjieshu", 0.95) == null) {
             if (MouseUtil.click(IMG_PATH + "jjtpjingong")) {
                 Thread.sleep(TimeAndRandomUtil.random(15000, 200));
@@ -46,6 +47,7 @@ public class JieJie extends BaseModel {
             } else if (MouseUtil.click(IMG_PATH + "jjtp1", 0.95)) {
                 Thread.sleep(TimeAndRandomUtil.random(100, 50));
             } else if (PointUtil.getPoint(IMG_PATH + "jjtp", 0.95) == null && (PointUtil.getPoint(IMG_PATH + "jjtp1", 0.95) == null)) {
+                //当前页面没有打得过的，直接刷新
                 if (MouseUtil.click(IMG_PATH + "jjtpshuaxin")) {
                     Thread.sleep(TimeAndRandomUtil.random(80, 20));
                 }

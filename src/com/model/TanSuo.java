@@ -45,41 +45,46 @@ public class TanSuo extends BaseModel {
     @Override
     protected void model() throws InterruptedException {
         try {
+            //获取探索结算奖励
             while (MouseUtil.click(IMG_PATH + "jiangli1")) {
-                Thread.sleep(TimeAndRandomUtil.random(100, 50));
+                Thread.sleep(TimeAndRandomUtil.random(80, 20));
                 MouseUtil.click(PointUtil.floatPoint(new Point(1100, 400)));
             }
+            //检测探索次数
+            checkTimes();
+            //检测是否处于困28地图中
             if (PointUtil.findOriginPoints(IMG_PATH + "tu").size() >= 1) {
+                //获取Boss结算奖励
                 while (MouseUtil.click(IMG_PATH + "jiangli2")) {
-                    Thread.sleep(TimeAndRandomUtil.random(100, 50));
+                    Thread.sleep(TimeAndRandomUtil.random(80, 20));
                     MouseUtil.click(PointUtil.floatPoint(new Point(1100, 400)));
                 }
                 if (MouseUtil.click(IMG_PATH + "boss")) {
-                    Thread.sleep(TimeAndRandomUtil.random(300, 50));
+                    Thread.sleep(TimeAndRandomUtil.random(50, 20));
                     controller.log("进入战斗");
                     times++;
                 } else if (MouseUtil.click(IMG_PATH + "xiaoguai")) {
-                    Thread.sleep(TimeAndRandomUtil.random(300, 50));
+                    Thread.sleep(TimeAndRandomUtil.random(50, 20));
                     controller.log("进入战斗");
                 } else {
+                    //当前画面内没有怪物游荡，向右移动
                     MouseUtil.click(PointUtil.floatPoint(new Point(850, 520)));
-                    Thread.sleep(TimeAndRandomUtil.random(50, 30));
                 }
             }
+            //如果勾选  攻打结界突破
             if (jieJieFalg) {
                 jjtp();
             }
+            //如果勾选  更换狗粮
             if (gouLiangFalg) {
                 checkGouLiang();
             } else {
                 MouseUtil.click(IMG_PATH + "zhunbei");
-                checkTimes();
-                Thread.sleep(TimeAndRandomUtil.random(2500, 50));
+                Thread.sleep(TimeAndRandomUtil.random(2000, 50));
             }
+            //一些无逻辑的重复操作
             for (String img : images) {
-                if (MouseUtil.click(IMG_PATH + img)) {
-                    Thread.sleep(TimeAndRandomUtil.random(50, 50));
-                }
+                MouseUtil.click(IMG_PATH + img);
             }
         } catch (CvException e) {
             controller.log("图片读取错误");
@@ -93,11 +98,15 @@ public class TanSuo extends BaseModel {
         }
     }
 
+    /**
+     * 检测狗粮满级功能
+     *
+     * @throws InterruptedException 线程等待异常
+     */
     private void checkGouLiang() throws InterruptedException {
         if (PointUtil.findOriginPoints(IMG_PATH + "man").size() <= 1) {
             MouseUtil.click(IMG_PATH + "zhunbei");
-            checkTimes();
-            Thread.sleep(TimeAndRandomUtil.random(2500, 50));
+            Thread.sleep(TimeAndRandomUtil.random(2000, 50));
             return;
         }
         if (MouseUtil.doubleClick(IMG_PATH + "shenkan")) {
@@ -141,6 +150,11 @@ public class TanSuo extends BaseModel {
         }
     }
 
+    /**
+     * 调用结界突破功能
+     *
+     * @throws InterruptedException 线程等待异常
+     */
     private void jjtp() throws InterruptedException {
         if (PointUtil.getPoint(JJTP_PATH + "jjtpman") != null) {
             controller.log("结界突破开始");
@@ -149,13 +163,21 @@ public class TanSuo extends BaseModel {
         }
     }
 
+    /**
+     * 获取满级狗粮坐标
+     *
+     * @return List<Point>
+     */
     private List<Point> getMan() {
         return PointUtil.findFloatPoints(IMG_PATH + "man", new Point(500, 0), new Point(1200, 500));
     }
 
+    /**
+     * 检查探索次数
+     */
     private void checkTimes() {
         if (tanSuoTimes != 0) {
-            if (times >= tanSuoTimes) {
+            if (times >= tanSuoTimes && PointUtil.findOriginPoints(IMG_PATH + "28").size() >= 1) {
                 controller.log("已探索" + times + "次");
                 times = 0;
                 controller.stop(null);

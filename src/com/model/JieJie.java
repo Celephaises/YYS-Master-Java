@@ -36,11 +36,11 @@ public class JieJie extends BaseModel {
 
     public void jjtp() throws InterruptedException {
         if (MouseUtil.click(IMG_PATH + "jjtpkaishi")) {
-            Thread.sleep(TimeAndRandomUtil.random(400, 100));
+            Thread.sleep(TimeAndRandomUtil.random(50, 30));
         }
         while (PointUtil.getPoint(IMG_PATH + "jjtpjieshu", 0.95) == null) {
             if (MouseUtil.click(IMG_PATH + "jjtpjingong")) {
-                Thread.sleep(TimeAndRandomUtil.random(15000, 2000));
+                Thread.sleep(TimeAndRandomUtil.random(15000, 200));
             } else if (MouseUtil.click(IMG_PATH + "jjtp", 0.95)) {
                 Thread.sleep(TimeAndRandomUtil.random(100, 50));
             } else if (MouseUtil.click(IMG_PATH + "jjtp1", 0.95)) {
@@ -52,9 +52,7 @@ public class JieJie extends BaseModel {
                 MouseUtil.click(IMG_PATH + "shuaxinqueren");
             }
             for (String img : imgs) {
-                if (MouseUtil.click(IMG_PATH + img)) {
-                    Thread.sleep(TimeAndRandomUtil.random(50, 50));
-                }
+                MouseUtil.click(IMG_PATH + img);
             }
         }
     }

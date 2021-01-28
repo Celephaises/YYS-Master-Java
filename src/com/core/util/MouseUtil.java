@@ -1,5 +1,7 @@
 package com.core.util;
 
+import com.core.common.Config;
+
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.Random;
@@ -23,7 +25,7 @@ public class MouseUtil {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             click(point);
-            robot.delay(TimeAndRandomUtil.random(100, 150));
+            robot.delay(TimeAndRandomUtil.random(Config.CLICK_WAIT, 20));
             return true;
         }
         return false;
@@ -33,7 +35,7 @@ public class MouseUtil {
         Point point = PointUtil.getPoint(img, precision);
         if (point != null) {
             click(point);
-            robot.delay(TimeAndRandomUtil.random(100, 150));
+            robot.delay(TimeAndRandomUtil.random(Config.CLICK_WAIT, 20));
             return true;
         }
         return false;
@@ -43,6 +45,7 @@ public class MouseUtil {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             rightClick(point);
+            robot.delay(TimeAndRandomUtil.random(Config.CLICK_WAIT, 20));
             return true;
         }
         return false;
@@ -52,9 +55,9 @@ public class MouseUtil {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             click(point);
-            robot.delay(TimeAndRandomUtil.random(50, 100));
+            robot.delay(TimeAndRandomUtil.random(50, 20));
             click(point);
-            robot.delay(TimeAndRandomUtil.random(100, 150));
+            robot.delay(TimeAndRandomUtil.random(Config.CLICK_WAIT, 20));
             return true;
         }
         return false;
@@ -96,7 +99,6 @@ public class MouseUtil {
         robot.mousePress(InputEvent.BUTTON3_MASK);
         robot.delay(TimeAndRandomUtil.random(50, 20));
         robot.mouseRelease(InputEvent.BUTTON3_MASK);
-        robot.delay(TimeAndRandomUtil.random(100, 20));
+        robot.delay(TimeAndRandomUtil.random(Config.CLICK_WAIT, 20));
     }
-
 }

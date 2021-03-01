@@ -106,7 +106,7 @@ public class TanSuo extends BaseModel {
         List<Point> mans = PointUtil.findFloatPoints(IMG_PATH + "man", new Point(500, 0), new Point(1200, 500));
         List<Point> gouLiangs;
         if (mans.size() >= 1) {
-            if (PointUtil.getPoint("ncard") == null) {
+            if (PointUtil.getPoint(IMG_PATH + "ncard") == null) {
                 while (!Thread.currentThread().isInterrupted() && !MouseUtil.click(IMG_PATH + "quanbu")) {
                 }
                 Thread.sleep(TimeAndRandomUtil.random(300, 50));

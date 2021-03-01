@@ -21,7 +21,7 @@ public class MouseUtil {
         }
     }
 
-    public static boolean click(String img) {
+    public static boolean click(String img) throws InterruptedException {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             click(point);
@@ -31,7 +31,7 @@ public class MouseUtil {
         return false;
     }
 
-    public static boolean click(String img, double precision) {
+    public static boolean click(String img, double precision) throws InterruptedException {
         Point point = PointUtil.getPoint(img, precision);
         if (point != null) {
             click(point);
@@ -41,7 +41,7 @@ public class MouseUtil {
         return false;
     }
 
-    public static boolean rightClick(String img) {
+    public static boolean rightClick(String img) throws InterruptedException {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             rightClick(point);
@@ -51,7 +51,7 @@ public class MouseUtil {
         return false;
     }
 
-    public static boolean doubleClick(String img) {
+    public static boolean doubleClick(String img) throws InterruptedException {
         Point point = PointUtil.getPoint(img);
         if (point != null) {
             click(point);
@@ -63,7 +63,7 @@ public class MouseUtil {
         return false;
     }
 
-    public static void moveTo(Point to) {
+    public static void moveTo(Point to) throws InterruptedException {
         robot.mouseMove(to.x, to.y);
     }
 
@@ -75,7 +75,7 @@ public class MouseUtil {
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
 
-    public static void dragTo(Point from, Point to) {
+    public static void dragTo(Point from, Point to) throws InterruptedException {
         moveTo(from);
         press();
         for (int i = 0; i < 100; i++) {
@@ -87,14 +87,14 @@ public class MouseUtil {
         release();
     }
 
-    public static void click(Point point) {
+    public static void click(Point point) throws InterruptedException {
         moveTo(point);
         press();
         robot.delay(TimeAndRandomUtil.random(50, 20));
         release();
     }
 
-    public static void rightClick(Point point) {
+    public static void rightClick(Point point) throws InterruptedException {
         moveTo(point);
         robot.mousePress(InputEvent.BUTTON3_MASK);
         robot.delay(TimeAndRandomUtil.random(50, 20));

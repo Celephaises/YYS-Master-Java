@@ -2,10 +2,11 @@ package com.model;
 
 
 import com.core.common.BaseModel;
+import com.core.common.Config;
 import com.core.util.MouseUtil;
+import com.core.util.MusicUtil;
 import com.core.util.PointUtil;
 import com.core.util.TimeAndRandomUtil;
-import org.opencv.core.CvException;
 
 import java.awt.*;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Random;
  *
  * @author Celphis
  */
-@SuppressWarnings({"SpellCheckingInspection", "BusyWait", "AlibabaUndefineMagicConstant"})
+@SuppressWarnings({"SpellCheckingInspection", "BusyWait", "AlibabaUndefineMagicConstant", "StatementWithEmptyBody"})
 public class TanSuo extends BaseModel {
     private static int times = 0;
     private static int tanSuoTimes;
@@ -26,7 +27,7 @@ public class TanSuo extends BaseModel {
     private boolean gouLiangFalg = (int) controller.tanSuoGouLiang.getSelectedToggle().getUserData() == 0;
     private final boolean jieJieFalg = (int) controller.tanSuoJieJie.getSelectedToggle().getUserData() == 0;
     private final boolean modelFalg = (int) controller.tanSuoModel.getSelectedToggle().getUserData() == 0;
-    String[] images = new String[]{"28", "tansuo", "jujue", "jiesuan0", "jiesuan1", "jiesuan2"};
+    String[] images = new String[]{"28", "tansuo", "jujue", "jiesuan0", "jiesuan1", "jiesuan2", "jiesuan3"};
 
     public TanSuo() {
         try {
@@ -43,58 +44,48 @@ public class TanSuo extends BaseModel {
     }
 
     @Override
-    protected void model() throws InterruptedException {
-        try {
-            //获取探索结算奖励
-            while (MouseUtil.click(IMG_PATH + "jiangli1")) {
+    protected void model() throws Exception {
+        //获取探索结算奖励
+        while (MouseUtil.click(IMG_PATH + "jiangli1")) {
+            Thread.sleep(TimeAndRandomUtil.random(80, 20));
+            MouseUtil.click(PointUtil.floatPoint(new Point(1100, 400)));
+        }
+        //检测探索次数
+        checkTimes();
+        //检测是否处于困28地图中
+        if (PointUtil.findOriginPoints(IMG_PATH + "tu").size() >= 1) {
+            //获取Boss结算奖励
+            while (MouseUtil.click(IMG_PATH + "jiangli2")) {
                 Thread.sleep(TimeAndRandomUtil.random(80, 20));
                 MouseUtil.click(PointUtil.floatPoint(new Point(1100, 400)));
             }
-            //检测探索次数
-            checkTimes();
-            //检测是否处于困28地图中
-            if (PointUtil.findOriginPoints(IMG_PATH + "tu").size() >= 1) {
-                //获取Boss结算奖励
-                while (MouseUtil.click(IMG_PATH + "jiangli2")) {
-                    Thread.sleep(TimeAndRandomUtil.random(80, 20));
-                    MouseUtil.click(PointUtil.floatPoint(new Point(1100, 400)));
-                }
-                if (MouseUtil.click(IMG_PATH + "boss")) {
-                    Thread.sleep(TimeAndRandomUtil.random(50, 20));
-                    controller.log("进入战斗");
-                    times++;
-                } else if (MouseUtil.click(IMG_PATH + "xiaoguai")) {
-                    Thread.sleep(TimeAndRandomUtil.random(50, 20));
-                    controller.log("进入战斗");
-                } else {
-                    //当前画面内没有怪物游荡，向右移动
-                    MouseUtil.click(PointUtil.floatPoint(new Point(850, 520)));
-                }
-            }
-            //如果勾选  攻打结界突破
-            if (jieJieFalg) {
-                jjtp();
-            }
-            //如果勾选  更换狗粮
-            if (gouLiangFalg) {
-                checkGouLiang();
+            if (MouseUtil.click(IMG_PATH + "boss")) {
+                Thread.sleep(TimeAndRandomUtil.random(50, 20));
+                controller.log("进入战斗");
+                times++;
+            } else if (MouseUtil.click(IMG_PATH + "xiaoguai")) {
+                Thread.sleep(TimeAndRandomUtil.random(50, 20));
+                controller.log("进入战斗");
             } else {
-                MouseUtil.click(IMG_PATH + "zhunbei");
-                Thread.sleep(TimeAndRandomUtil.random(2000, 50));
+                //当前画面内没有怪物游荡，向右移动
+                MouseUtil.click(PointUtil.floatPoint(new Point(850, 520)));
             }
+        } else {
             //一些无逻辑的重复操作
             for (String img : images) {
                 MouseUtil.click(IMG_PATH + img);
             }
-        } catch (CvException e) {
-            controller.log("图片读取错误");
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            controller.log("空指针错误");
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            controller.log("未知错误");
-            e.printStackTrace();
+        }
+        //如果勾选  攻打结界突破
+        if (jieJieFalg) {
+            jjtp();
+        }
+        //如果勾选  更换狗粮
+        if (gouLiangFalg) {
+            checkGouLiang();
+        } else {
+            MouseUtil.click(IMG_PATH + "zhunbei");
+            Thread.sleep(TimeAndRandomUtil.random(2000, 50));
         }
     }
 
@@ -103,7 +94,7 @@ public class TanSuo extends BaseModel {
      *
      * @throws InterruptedException 线程等待异常
      */
-    private void checkGouLiang() throws InterruptedException {
+    private void checkGouLiang() throws InterruptedException, IndexOutOfBoundsException {
         if (PointUtil.findOriginPoints(IMG_PATH + "man").size() <= 1) {
             MouseUtil.click(IMG_PATH + "zhunbei");
             Thread.sleep(TimeAndRandomUtil.random(2000, 50));
@@ -115,10 +106,11 @@ public class TanSuo extends BaseModel {
         List<Point> mans = PointUtil.findFloatPoints(IMG_PATH + "man", new Point(500, 0), new Point(1200, 500));
         List<Point> gouLiangs;
         if (mans.size() >= 1) {
-            if (MouseUtil.click(IMG_PATH + "quanbu")) {
+            if (PointUtil.getPoint("ncard") == null) {
+                while (!Thread.currentThread().isInterrupted() && !MouseUtil.click(IMG_PATH + "quanbu")) {
+                }
                 Thread.sleep(TimeAndRandomUtil.random(300, 50));
-                if (MouseUtil.click(IMG_PATH + "ncard")) {
-                    Thread.sleep(TimeAndRandomUtil.random(300, 50));
+                while (!Thread.currentThread().isInterrupted() && !MouseUtil.click(IMG_PATH + "ncard")) {
                 }
             }
             Point gundongtiao = null;
@@ -161,6 +153,9 @@ public class TanSuo extends BaseModel {
             new JieJie().jjtp();
             controller.log("结界突破结束");
         }
+        if (PointUtil.getPoint(JJTP_PATH + "bengzhou") != null) {
+            MouseUtil.click(JJTP_PATH + "jjtpguanbi");
+        }
     }
 
     /**
@@ -175,12 +170,15 @@ public class TanSuo extends BaseModel {
     /**
      * 检查探索次数
      */
-    private void checkTimes() {
+    private void checkTimes() throws Exception {
         if (tanSuoTimes != 0) {
             if (times >= tanSuoTimes && PointUtil.findOriginPoints(IMG_PATH + "28").size() >= 1) {
                 controller.log("已探索" + times + "次");
                 times = 0;
                 controller.stop(null);
+                if (Config.BEEP_SOUND == 1) {
+                    MusicUtil.playMusic("end.mp3");
+                }
             }
         }
     }

@@ -17,6 +17,9 @@
       </element>
       <element id="library" level="project" name="jintellitype-1.3.9" />
       <element id="library" level="project" name="opencv-451" />
+      <element id="library" level="project" name="jflac-codec-1.5.2" />
+      <element id="library" level="project" name="mp3spi-1.9.5.4" />
+      <element id="library" level="project" name="tritonus_share-0.3.6" />
     </root>
   </artifact>
 </component>

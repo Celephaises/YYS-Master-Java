@@ -45,17 +45,6 @@ public class Controller {
     public RadioButton buHuanGouLiang;
 
     @FXML
-    public RadioButton danRenYuHun;
-    @FXML
-    public RadioButton zuDuiYuHun;
-    @FXML
-    public RadioButton hunTuYuHun;
-    @FXML
-    public RadioButton hunShiYuHun;
-    @FXML
-    public RadioButton yeYuanHuoYuHun;
-
-    @FXML
     public Pane root;
 
     @FXML
@@ -88,6 +77,9 @@ public class Controller {
     private Tab yuHunPane;
     @FXML
     private Tab yuLinPane;
+    @FXML
+    private Tab huoDongPane;
+
     public ToggleGroup tanSuoModel = new ToggleGroup();
     public ToggleGroup tanSuoJieJie = new ToggleGroup();
     public ToggleGroup tanSuoGouLiang = new ToggleGroup();
@@ -152,6 +144,12 @@ public class Controller {
                         model.start();
                     }
                     break;
+                case "活动":
+                    if (model == null) {
+                        model = new HuoDong();
+                        model.start();
+                    }
+                    break;
                 default:
                     log("发生未知异常");
                     break;
@@ -198,6 +196,14 @@ public class Controller {
         if (initFlag && modelType != 4) {
             modelType = 4;
             log("选择百鬼模式");
+        }
+    }
+
+    @FXML
+    void huoDongModel(Event event) {
+        if (initFlag && modelType != 4) {
+            modelType = 4;
+            log("选择活动模式");
         }
     }
 

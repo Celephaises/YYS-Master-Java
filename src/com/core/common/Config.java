@@ -22,6 +22,7 @@ public class Config {
     public static String GIF_PATH;
     public static Integer IMREAD_TYPE;
     public static Integer CLICK_WAIT;
+    public static Integer BEEP_SOUND;
 
     public static void init() throws NumberFormatException, IOException {
         config = new Properties();
@@ -33,5 +34,6 @@ public class Config {
         IMREAD_TYPE = new Integer(config.getProperty("IMREAD_TYPE", "0"));
         IMREAD_TYPE = IMREAD_TYPE == 1 || IMREAD_TYPE == 0 ? IMREAD_TYPE : 0;
         CLICK_WAIT = new Integer(config.getProperty("CLICK_WAIT", "50"));
+        BEEP_SOUND = new Integer(config.getProperty("BEEP_SOUND", "1"));
     }
 }
